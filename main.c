@@ -6,18 +6,19 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 11:47:50 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/04 12:40:18 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/04 17:18:19 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	char	*s;
-	s = "NULL";
+	char			*s;
+	StackElement	*a;
 
-	if (check_flags(ft_count_flags(argc, argv))== 0)
+	s = "NULL";
+	if (check_flags(ft_count_flags(argc, argv)) == 0)
 		return (0);
 	s = add_argv(argc, argv);
 	if (!s)
@@ -28,9 +29,8 @@ int main(int argc, char **argv)
 		return (free(s), 0);
 	}
 	printf("%s\n", s);
+	a = stack_a(s);
+	print_stack(a);
 	free(s);
 	return (0);
 }
-
-
-

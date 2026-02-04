@@ -6,7 +6,7 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 11:48:43 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/04 12:28:11 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/04 14:32:05 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ size_t	ft_strlen(const char *str)
 		i++;
 	return (i);
 }
+
 char	*ft_strdup(const char *s)
 {
 	char		*s1;
@@ -38,6 +39,7 @@ char	*ft_strdup(const char *s)
 	s1[i] = '\0';
 	return (s1);
 }
+
 char	*ft_strjoin_space(char const *s1, char const *s2)
 {
 	char	*s3;
@@ -65,17 +67,19 @@ char	*ft_strjoin_space(char const *s1, char const *s2)
 	s3[j] = '\0';
 	return (s3);
 }
-char    *add_argv(int argc, char **argv)
-{   
-	int i = 1;
+
+char	*add_argv(int argc, char **argv)
+{
+	int		i;
 	char	*s_total;
 	char	*temp;
-	
+
 	s_total = ft_strdup("");
 	i = 1;
 	while (i < argc)
 	{
-		if (!isbench(argv[i]) && !issimple(argv[i]) && !ismedium(argv[i]) && !iscomplex(argv[i]) && !isadaptive(argv[i]))
+		if (!isbench(argv[i]) && !issimple(argv[i]) && !ismedium(argv[i])
+			&& !iscomplex(argv[i]) && !isadaptive(argv[i]))
 		{
 			temp = s_total;
 			s_total = ft_strjoin_space(temp, argv[i]);
@@ -83,21 +87,23 @@ char    *add_argv(int argc, char **argv)
 		}
 		i++;
 	}
-	return(s_total);
-	if(s_total && s_total[0] != '\0')
+	return (s_total);
+	if (s_total && s_total[0] != '\0')
 		free(s_total);
 }
+
 int	check_s(char *s)
 {
 	int	i;
 
 	i = 0;
-	while(s[i] != '\0')
+	while (s[i] != '\0')
 	{
-		if (s[i] == '+' || s[i] == '-' || (s[i] <= '9' && s[i] >= '0') || s[i] == ' ')
+		if (s[i] == '+' || s[i] == '-'
+			|| (s[i] <= '9' && s[i] >= '0') || s[i] == ' ')
 			i++;
 		else
-			return(0);
+			return (0);
 	}
-	return(1);
+	return (1);
 }

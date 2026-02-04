@@ -6,7 +6,7 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 11:48:18 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/04 12:04:33 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/04 17:18:19 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,6 @@ Bool	is_empty_stack(Stack st)
 	return (false);
 }
 
-Stack	push_stack(Stack st, int x)
-{
-	StackElement	*element;
-
-	element = malloc(sizeof(*element));
-	if (!element)
-		return (0);
-	element->value = x;
-	element->next = st;
-	return (element);
-}
 
 void	print_stack(Stack st)
 {
