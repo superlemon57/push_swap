@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_stack_a.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 15:19:32 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/11 16:12:47 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/11 17:23:54 by tlopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,33 +61,44 @@ void	free_split(char **arrays)
 	}
 	free(arrays);
 }
-
-StackElement	*stack_a(char *s)
+static StackElement	*build_stack(char **arr)
 {
 	StackElement	*first;
 	StackElement	*cur;
-	char			**arr;
 	int				i;
+	int				value;
 
-	arr = ft_split(s, ' ');
-	if (!arr || !arr[0])
+	value = ft_atoi_mod(arr[0]);
+	if (value == 1)
 		return (NULL);
-	first = new_node(ft_atoi_mod(arr[0]));
+	first = new_node(value);
 	if (!first)
-		return (free_split(arr), NULL);
+		return (NULL);
 	cur = first;
 	i = 0;
 	while (arr[++i])
 	{
-		cur->next = new_node(ft_atoi_mod(arr[i]));
-		if (ft_atoi_mod(arr[i]) == 0)
-			return (0);
+		value = ft_atoi_mod(arr[i]);
+		if (value == 1)
+			return (free_stack(first), NULL);
+		cur->next = new_node(value);
 		if (!cur->next)
-			return (free_split(arr), free_stack(first), NULL);
+			return (free_stack(first), NULL);
 		cur = cur->next;
 	}
-	free_split(arr);
-	if (!no_duplicate(first))
-		return (free_stack(first), NULL);
 	return (first);
+}
+StackElement	*stack_a(char *s)
+{
+	StackElement	*stack;
+	char			**arr;
+
+	arr = ft_split(s, ' ');
+	if (!arr || !arr[0])
+		return (NULL);
+	stack = build_stack(arr);
+	free_split(arr);
+	if (!stack || !no_duplicate(stack))
+		return (free_stack(stack), NULL);
+	return (stack);
 }
