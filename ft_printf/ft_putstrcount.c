@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putstrcount.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/04 11:47:50 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/11 13:23:05 by mledda           ###   ########.fr       */
+/*   Created: 2025/12/07 12:09:00 by mledda            #+#    #+#             */
+/*   Updated: 2025/12/07 16:39:09 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "ft_printf.h"
 
-int	main(int argc, char **argv)
+void	ft_putchar(char c)
 {
-	char			*s;
-	StackElement	*a;
+	write(1, &c, 1);
+}
 
-	s = "NULL";
-	if (check_flags(ft_count_flags(argc, argv)) == 0)
-		return (0);
-	s = add_argv(argc, argv);
+int	ft_putstrcount(const char *s)
+{
+	int	i;
+
+	i = 0;
 	if (!s)
-		return (0);
-	if (check_s(s) == 0)
 	{
-		printf("erreur\n");
-		return (free(s), 0);
+		write(1, "(null)", 6);
+		return (6);
 	}
-	ft_printf("%s\n", s);
-	a = stack_a(s);
-	// print_stack(a);
-	// sa(&a);
-	// print_stack(a);
-	free(s);
-	free_stack(a);
-	return (0);
+	while (s[i] != '\0')
+	{
+		ft_putchar(s[i]);
+		i++;
+	}
+	return (i);
 }

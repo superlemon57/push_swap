@@ -1,39 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putnbru.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/04 11:47:50 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/11 13:23:05 by mledda           ###   ########.fr       */
+/*   Created: 2025/12/07 14:02:12 by mledda            #+#    #+#             */
+/*   Updated: 2025/12/07 16:39:31 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "ft_printf.h"
 
-int	main(int argc, char **argv)
+int	ft_putnbru(unsigned int n)
 {
-	char			*s;
-	StackElement	*a;
+	int				i;
+	unsigned long	nb;
 
-	s = "NULL";
-	if (check_flags(ft_count_flags(argc, argv)) == 0)
-		return (0);
-	s = add_argv(argc, argv);
-	if (!s)
-		return (0);
-	if (check_s(s) == 0)
+	nb = n;
+	i = 0;
+	if (n <= 9)
+		i += ft_putcharcount(n + 48);
+	else
 	{
-		printf("erreur\n");
-		return (free(s), 0);
+		i += ft_putnbru(n / 10);
+		i += ft_putnbru(n % 10);
 	}
-	ft_printf("%s\n", s);
-	a = stack_a(s);
-	// print_stack(a);
-	// sa(&a);
-	// print_stack(a);
-	free(s);
-	free_stack(a);
-	return (0);
+	return (i);
 }

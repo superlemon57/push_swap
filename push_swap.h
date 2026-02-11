@@ -6,7 +6,7 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 11:47:37 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/04 17:18:20 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/11 14:08:53 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "libft/libft.h"
+#include "ft_printf/ft_printf.h"
 
 typedef struct s_count_flags
 {
@@ -60,10 +62,34 @@ int 	check_flags(t_count_flag j);
 t_count_flag ft_count_flags(int argc, char **argv);
 void	free_split(char **arrays);
 char	**ft_split(char const *s, char c);
-static char	*copy_world_of_index(char const *s, char c, size_t index);
-static size_t	count_world(char const *s, char c);
 int	ft_atoi(const char *str);
-//void	print_stack(Stack st);
+void	print_stack(Stack st);
 StackElement	*stack_a(char *s);
+int	ft_atoi_mod( char *str);
+void    ss(StackElement **a, StackElement **b);
+void    sb(StackElement **b);
+void    sa(StackElement **a);
+void    swap(StackElement **s);
+int	no_duplicate(StackElement *a);
+StackElement	*new_node(int value);
+void	free_stack(StackElement *lst);
+void    pb(StackElement **a, StackElement **b);
+void    pa(StackElement **a, StackElement **b);
+void    push(StackElement **src, StackElement **dest);
+void    reverse_rotate(StackElement **s);
+void    rra(StackElement **a);
+void    rrb(StackElement **b);
+void    rrr(StackElement **a, StackElement **b);
+void    rotate(StackElement **s);
+void    ra(StackElement **a);
+void    rb(StackElement **b);
+void    rr(StackElement **a, StackElement **b);
+void    swap(StackElement **s);
+void    sa(StackElement **a);
+void    sb(StackElement **b);
+void    ss(StackElement **a, StackElement **b);
+
+
+
 
 #endif

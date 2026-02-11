@@ -6,81 +6,45 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 15:19:32 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/04 17:18:19 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/11 14:09:05 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include "libft/libft.h"
 
-static size_t	count_world(char const *s, char c)
+void	free_stack(StackElement *lst)
 {
-	size_t	count;
-	size_t	i;
+	StackElement	*tmp;
 
-	count = 0;
-	i = 0;
-	while (s[i])
+	while (lst)
 	{
-		while (s[i] && s[i] == c)
-			i++;
-		if (s[i] && s[i] != c)
-			count++;
-		while (s[i] && s[i] != c)
-			i++;
+		tmp = lst->next;
+		free(lst);
+		lst = tmp;
 	}
-	return (count);
 }
 
-static char	*copy_world_of_index(char const *s, char c, size_t index)
+int	no_duplicate(StackElement *a)
 {
-	size_t	count;
-	size_t	i;
-		size_t	start;
+	StackElement	*current;
+	StackElement	*runner;
 
-	count = 0;
-	i = 0;
-	while (s[i])
+	current = a;
+	while (current != NULL)
 	{
-		while (s[i] && s[i] == c)
-			i++;
-		if (s[i] && s[i] != c)
-			count++;
-		if (s[i] && index == count)
+		runner = current->next;
+		while (runner != NULL)
 		{
-			start = i;
-			while (s[i] && s[i] != c)
-				i++;
-			return (ft_substr(s, start, (i - start)));
+			if (current->value == runner->value)
+			{
+				write (1, "duplicate\n", 10);
+				return (0);
+			}
+			runner = runner->next;
 		}
-		while (s[i] && s[i] != c)
-			i++;
+		current = current->next;
 	}
-	return (NULL);
-}
-
-char	**ft_split(char const *s, char c)
-{
-	char	**arrays;
-	size_t	count;
-	size_t	j;
-
-	j = 0;
-	if (s == NULL)
-		return (NULL);
-	count = count_world(s, c);
-	arrays = (char **)ft_calloc(sizeof (char *), (count + 1));
-	if (!arrays)
-		return (NULL);
-	arrays[count] = 0;
-	while ((j + 1) <= count)
-	{
-		arrays[j] = copy_world_of_index (s, c, (j + 1));
-		if (arrays[j] == NULL)
-			return (NULL);
-		j++;
-	}
-	return (arrays);
+	return (1);
 }
 
 void	free_split(char **arrays)
@@ -100,32 +64,28 @@ void	free_split(char **arrays)
 
 StackElement	*stack_a(char *s)
 {
-	size_t			i;
-	StackElement	*firstnode;
-	StackElement	*new;
-	StackElement	*current;
-	char			**arrays;
+	StackElement	*first;
+	StackElement	*cur;
+	char			**arr;
+	int				i;
 
-	arrays = ft_split(s, ' ');
-	if (!arrays || !arrays[0])
+	arr = ft_split(s, ' ');
+	if (!arr || !arr[0])
 		return (NULL);
-	firstnode = malloc(sizeof(StackElement));
-	if (!firstnode)
-		return (NULL);
-	firstnode->value = ft_atoi(arrays[0]);
-	firstnode->next = NULL;
-	current = firstnode;
-	i = 1;
-	while (arrays[i])
+	first = new_node(ft_atoi_mod(arr[0]));
+	if (!first)
+		return (free_split(arr), NULL);
+	cur = first;
+	i = 0;
+	while (arr[++i])
 	{
-		new = malloc(sizeof(StackElement));
-		if (!new)
-			return (NULL);
-		new->value = ft_atoi(arrays[i]);
-		new->next = NULL;
-		current->next = new;
-		current = new;
-		i++;
+		cur->next = new_node(ft_atoi_mod(arr[i]));
+		if (!cur->next)
+			return (free_split(arr), free_stack(first), NULL);
+		cur = cur->next;
 	}
-	return (free_split(arrays), firstnode);
+	free_split(arr);
+	if (!no_duplicate(first))
+		return (free_stack(first), NULL);
+	return (first);
 }
