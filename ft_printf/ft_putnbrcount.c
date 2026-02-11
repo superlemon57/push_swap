@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putnbrcount.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/04 11:47:50 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/11 13:23:05 by mledda           ###   ########.fr       */
+/*   Created: 2025/12/07 12:58:33 by mledda            #+#    #+#             */
+/*   Updated: 2025/12/07 15:17:45 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "ft_printf.h"
 
-int	main(int argc, char **argv)
+int	ft_putnbrcount(int n)
 {
-	char			*s;
-	StackElement	*a;
+	long	nb;
+	int		i;
 
-	s = "NULL";
-	if (check_flags(ft_count_flags(argc, argv)) == 0)
-		return (0);
-	s = add_argv(argc, argv);
-	if (!s)
-		return (0);
-	if (check_s(s) == 0)
+	nb = n;
+	i = 0;
+	if (nb < 0)
 	{
-		printf("erreur\n");
-		return (free(s), 0);
+		i += ft_putcharcount('-');
+		nb = -nb;
 	}
-	ft_printf("%s\n", s);
-	a = stack_a(s);
-	// print_stack(a);
-	// sa(&a);
-	// print_stack(a);
-	free(s);
-	free_stack(a);
-	return (0);
+	if (nb < 10)
+		i += ft_putcharcount(nb + 48);
+	else
+	{
+		i += ft_putnbrcount(nb / 10);
+		i += ft_putnbrcount(nb % 10);
+	}
+	return (i);
 }
