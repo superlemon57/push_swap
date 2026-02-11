@@ -20,11 +20,11 @@ int	ft_putnbru(unsigned int n)
 	nb = n;
 	i = 0;
 	if (n <= 9)
-		i += ft_putcharcount(n + 48);
+		i += ft_putcharcount(nb + 48);
 	else
 	{
-		i += ft_putnbru(n / 10);
-		i += ft_putnbru(n % 10);
+		i += ft_putnbru(nb / 10);
+		i += ft_putnbru(nb % 10);
 	}
 	return (i);
 }

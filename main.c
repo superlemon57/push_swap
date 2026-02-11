@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 11:47:50 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/11 13:23:05 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/11 15:35:55 by tlopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int	main(int argc, char **argv)
 {
 	char			*s;
 	StackElement	*a;
+	StackElement*b;
 
+	b = NULL;
 	s = "NULL";
 	if (check_flags(ft_count_flags(argc, argv)) == 0)
 		return (0);
@@ -28,9 +30,11 @@ int	main(int argc, char **argv)
 		printf("erreur\n");
 		return (free(s), 0);
 	}
-	ft_printf("%s\n", s);
+	//ft_printf("%s\n", s);
 	a = stack_a(s);
-	// print_stack(a);
+	//print_stack(a);
+	simple_sort(&a, &b);
+	print_stack(a);
 	// sa(&a);
 	// print_stack(a);
 	free(s);

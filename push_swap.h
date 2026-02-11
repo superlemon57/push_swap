@@ -88,6 +88,7 @@ void    swap(StackElement **s);
 void    sa(StackElement **a);
 void    sb(StackElement **b);
 void    ss(StackElement **a, StackElement **b);
+void simple_sort(StackElement **a, StackElement **b);
 
 
 

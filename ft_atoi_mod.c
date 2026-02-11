@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi_mod.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 12:50:49 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/11 13:25:30 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/11 15:37:27 by tlopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	ft_atoi_mod( char *str)
 
 	sign = 1;
 	i = 0;
+	result = 0;
 	while (str[i] == 32 || (str[i] <= 13 && str[i] >= 9))
 		i++;
 	if (str[i] == '+' || str[i] == '-')

@@ -3,7 +3,7 @@ NAME	= push_swap
 LIBFT_DIR = ./libft
 FT_PRINTF_DIR = ./ft_printf
 
-SRC	 =		add_argv.c check_flags.c create_stack_a.c create_stack.c flags.c main.c push.c\
+SRC	 =		add_argv.c check_flags.c create_stack_a.c create_stack.c flags.c main.c push.c simple_sort.c\
 			reverse_rotate.c rotate.c swap.c ft_atoi_mod.c\
 		
 OBJ		= $(SRC:.c=.o)
