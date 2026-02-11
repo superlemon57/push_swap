@@ -6,7 +6,7 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 15:19:32 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/11 14:09:05 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/11 16:12:47 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ StackElement	*stack_a(char *s)
 	while (arr[++i])
 	{
 		cur->next = new_node(ft_atoi_mod(arr[i]));
+		if (ft_atoi_mod(arr[i]) == 0)
+			return (0);
 		if (!cur->next)
 			return (free_split(arr), free_stack(first), NULL);
 		cur = cur->next;

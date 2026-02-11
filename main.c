@@ -30,7 +30,7 @@ int	main(int argc, char **argv)
 	}
 	ft_printf("%s\n", s);
 	a = stack_a(s);
-	// print_stack(a);
+	print_stack(a);
 	// sa(&a);
 	// print_stack(a);
 	free(s);
