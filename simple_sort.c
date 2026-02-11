@@ -1,13 +1,31 @@
-#include <stdlib.h>
-#include <unistd.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   simple_sort.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/11 17:29:12 by tlopez            #+#    #+#             */
+/*   Updated: 2026/02/11 17:29:12 by tlopez           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "push_swap.h"
 
-typedef struct StackElement
+typedef struct s_count_operations
 {
-    int                     value;
-    struct StackElement     *next;
-}   StackElement;
-
+        int     count_pa;
+        int     count_pb;
+        int     count_sa;
+        int     count_sb;
+        int     count_ss;
+        int     count_ra;
+        int     count_rb;
+        int     count_rr;
+        int     count_rra;
+        int     count_rrb;
+        int     count_rrr;
+} t_count_operations;
 
 int stack_size(StackElement *s)
 {
@@ -60,120 +78,6 @@ int find_pos(StackElement *a, int value)
     return (-1);
 }
 
-
-// operations
-
-void swap(StackElement **s)
-{
-    StackElement *first;
-    StackElement *second;
-
-    if (!s || !*s || !(*s)->next)
-        return ;
-
-    first = *s;
-    second = first->next;
-
-    first->next = second->next;
-    second->next = first;
-    *s = second;
-}
-
-void sa(StackElement **a)
-{
-    swap(a);
-    write(1, "sa\n", 3);
-}
-
-
-void push(StackElement **src, StackElement **dest)
-{
-    StackElement *tmp;
-
-    if (!src || !*src)
-        return ;
-
-    tmp = *src;
-    *src = tmp->next;
-
-    tmp->next = *dest;
-    *dest = tmp;
-}
-
-void pa(StackElement **a, StackElement **b)
-{
-    push(b, a);
-    write(1, "pa\n", 3);
-}
-
-void pb(StackElement **a, StackElement **b)
-{
-    push(a, b);
-    write(1, "pb\n", 3);
-}
-
-
-
-void rotate(StackElement **s)
-{
-    StackElement *first;
-    StackElement *last;
-
-    if (!s || !*s || !(*s)->next)
-        return ;
-
-    first = *s;
-    *s = first->next;
-
-    last = *s;
-    while (last->next)
-        last = last->next;
-
-    last->next = first;
-    first->next = NULL;
-}
-
-void ra(StackElement **a)
-{
-    rotate(a);
-    write(1, "ra\n", 3);
-}
-
-
-
-void reverse_rotate(StackElement **s)
-{
-    StackElement *prev;
-    StackElement *last;
-
-    if (!s || !*s || !(*s)->next)
-        return ;
-
-    prev = NULL;
-    last = *s;
-
-    while (last->next)
-    {
-        prev = last;
-        last = last->next;
-    }
-
-    prev->next = NULL;
-    last->next = *s;
-    *s = last;
-}
-
-void rra(StackElement **a)
-{
-    reverse_rotate(a);
-    write(1, "rra\n", 4);
-}
-
-
-
-// trier
-
-
 void bring_to_top(StackElement **a, int pos)
 {
     int size;
@@ -197,3 +101,47 @@ void sort_three(StackElement **a)
 {
     int x;
     int y;
+    int z;
+
+    x = (*a)->value;
+    y = (*a)->next->value;
+    z = (*a)->next->next->value;
+
+    if (x > y && y < z && x < z)
+        sa(a);
+    else if (x > y && y > z)
+    {
+        sa(a);
+        rra(a);
+    }
+    else if (x > y && y < z && x > z)
+        ra(a);
+    else if (x < y && y > z && x < z)
+    {
+        sa(a);
+        ra(a);
+    }
+    else if (x < y && y > z && x > z)
+        rra(a);
+}
+
+
+void simple_sort(StackElement **a, StackElement **b)
+{
+    int min;
+    int pos;
+
+    if (is_sorted(*a))
+        return ;
+    while (stack_size(*a) > 3)
+    {
+        min = find_min(*a);
+        pos = find_pos(*a, min);
+
+        bring_to_top(a, pos);
+        pb(a, b);
+    }
+    sort_three(a);
+    while (*b)
+        pa(a, b);
+}
