@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_stack_a.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 15:19:32 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/11 17:23:54 by tlopez           ###   ########.fr       */
+/*   Updated: 2026/02/11 17:26:25 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	free_split(char **arrays)
 	}
 	free(arrays);
 }
+
 static StackElement	*build_stack(char **arr)
 {
 	StackElement	*first;
@@ -88,6 +89,7 @@ static StackElement	*build_stack(char **arr)
 	}
 	return (first);
 }
+
 StackElement	*stack_a(char *s)
 {
 	StackElement	*stack;

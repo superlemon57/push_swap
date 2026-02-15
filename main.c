@@ -6,12 +6,25 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 11:47:50 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/11 13:23:05 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/15 21:19:20 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+void    print_stack_index(StackElement *st)
+{
+	if (!st)
+	{
+		printf("Stack is empty\n");
+		return ;
+	}
+	while (st)
+	{
+		printf("Value: %d | Index: %d\n", st->value, st->index);
+		st = st->next;
+	}
+}
 int	main(int argc, char **argv)
 {
 	char			*s;
@@ -31,6 +44,8 @@ int	main(int argc, char **argv)
 	ft_printf("%s\n", s);
 	a = stack_a(s);
 	print_stack(a);
+	indexation(&a);
+	print_stack_index(a);
 	// sa(&a);
 	// print_stack(a);
 	free(s);

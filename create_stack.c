@@ -6,7 +6,7 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 11:48:18 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/08 16:01:12 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/15 16:24:51 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,28 @@ Bool	is_empty_stack(Stack st)
 	return (false);
 }
 
+int	stack_size(StackElement *s)
+{
+	int	count;
+
+	count = 0;
+	while (s)
+	{
+		count++;
+		s = s->next;
+	}
+	return (count);
+}
+
 void	print_stack(Stack st)
 {
-	
 	while (!is_empty_stack(st))
 	{
 		printf("%d\n", st->value);
 		st = st->next;
 	}
 }
+
 StackElement	*new_node(int value)
 {
 	StackElement	*new;
