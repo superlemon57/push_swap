@@ -6,7 +6,7 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 11:47:37 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/15 20:40:15 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/16 19:44:49 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,17 +103,20 @@ void    sa(StackElement **a);
 void    sb(StackElement **b);
 void    ss(StackElement **a, StackElement **b);
 void	swaparr(int *a, int *b);
-int	partition(int arr[], int low, int high);
+int		partition(int arr[], int low, int high);
 void	quick_sort(int arr[], int low, int high);
 //static void	fill_index(StackElement *a, int *arr, int n);
-int	indexation(StackElement **a);
-int	find_min(StackElement *a);
-int	find_max(StackElement *a);
-int	is_sorted(StackElement *a);
-int	stack_size(StackElement *s);
-
-
-
-
+int		indexation(StackElement **a);
+int		find_min(StackElement *a);
+int		find_max(StackElement *a);
+int		is_sorted(StackElement *a);
+int		stack_size(StackElement *s);
+int		get_bucket_size(int n);
+void	transfert_a_to_b(StackElement **a, StackElement **b);
+int		find_max_index(StackElement *b);
+void	push_b_to_a(StackElement **b, StackElement **a);
+void	bucket_sort(StackElement **a);
+int		get_pos(StackElement *stack, int target_index);
+int		stack_size(StackElement *s);
 
 #endif

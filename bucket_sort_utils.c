@@ -6,7 +6,7 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 15:49:59 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/15 21:18:45 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/16 18:32:46 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ void	quick_sort(int arr[], int low, int high)
 	{
 		pi = partition(arr, low, high);
 		quick_sort(arr, low, pi -1);
-		quick_sort(arr, pi + 1 , high);
+		quick_sort(arr, pi + 1, high);
 	}
 }
 
 static void	fill_index(StackElement *a, int *arr, int n)
 {
 	StackElement	*curr;
-	int	i;
+	int				i;
 
 	curr = a;
 	while (curr)

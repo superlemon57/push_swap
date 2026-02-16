@@ -5,6 +5,7 @@ FT_PRINTF_DIR = ./ft_printf
 
 SRC	 =		add_argv.c check_flags.c create_stack_a.c create_stack.c flags.c main.c push.c\
 			reverse_rotate.c rotate.c swap.c ft_atoi_mod.c bucket_sort_utils.c simple_sort_utils.c\
+			bucket_sort.c bucket_sort_utils_2.c\
 		
 OBJ		= $(SRC:.c=.o)
 

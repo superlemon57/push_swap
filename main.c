@@ -6,7 +6,7 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 11:47:50 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/15 21:19:20 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/16 19:50:43 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ int	main(int argc, char **argv)
 		printf("erreur\n");
 		return (free(s), 0);
 	}
-	ft_printf("%s\n", s);
+	//ft_printf("%s\n", s);
 	a = stack_a(s);
-	print_stack(a);
-	indexation(&a);
-	print_stack_index(a);
+	//print_stack(a);
+	//indexation(&a);
+	//print_stack_index(a);
+	bucket_sort(&a);
 	// sa(&a);
-	// print_stack(a);
+	print_stack(a);
 	free(s);
 	free_stack(a);
 	return (0);
