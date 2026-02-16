@@ -1,3 +1,14 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: tlopez <tlopez@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2026/02/16 20:03:43 by mledda            #+#    #+#              #
+#    Updated: 2026/02/16 20:06:42 by tlopez           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 NAME	= push_swap
 
 LIBFT_DIR = ./libft
@@ -5,6 +16,7 @@ FT_PRINTF_DIR = ./ft_printf
 
 SRC	 =		add_argv.c check_flags.c create_stack_a.c create_stack.c flags.c main.c push.c\
 			reverse_rotate.c rotate.c swap.c ft_atoi_mod.c bucket_sort_utils.c simple_sort_utils.c\
+			bucket_sort.c bucket_sort_utils_2.c radix_sort.c\
 		
 OBJ		= $(SRC:.c=.o)
 
