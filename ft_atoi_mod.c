@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi_mod.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlopez <tlopez@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 12:50:49 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/11 16:08:42 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/16 20:31:06 by tlopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ int	ft_atoi_mod( char *str)
 			sign = -1;
 	}
 	if (!(str[i] >= '0' && str[i] <= '9') && str[i] != '\0')
-		return (write(2, "error_sign\n", 11), 0);
+		return (write(2, "error_sign\n", 11), 1);
 	while (str[i] <= '9' && str[i] >= '0')
 	{
 		result = (10 * result) + (str[i] - '0');
 		i++;
 	}
 	if ((sign * result) > 2147483647 || (sign * result) < -2147483648)
-		return (write(2, "error\n", 6), 0);
+		return (write(2, "error\n", 6), 1);
 	return ((int)(sign * result));
 }
 // int	main(int argc, char **argv)

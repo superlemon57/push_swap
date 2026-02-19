@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlopez <tlopez@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 11:47:50 by mledda            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2026/02/19 16:41:07 by mledda           ###   ########.fr       */
+=======
+/*   Updated: 2026/02/16 20:18:16 by tlopez           ###   ########.fr       */
+>>>>>>> 0035c8f183ef70975ada00befb8f07e1c70c852b
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +35,7 @@ void	print_bench(t_count_operations *bench)
 }
 int	main(int argc, char **argv)
 {
+<<<<<<< HEAD
 	char				*s;
 	StackElement		*a;
 	t_count_operations	*bench;
@@ -38,7 +43,14 @@ int	main(int argc, char **argv)
 	
 	bench = 0;
 	b = NULL;
+=======
+	char			*s;
+	StackElement	*a;
+	StackElement	*b;
+
+>>>>>>> 0035c8f183ef70975ada00befb8f07e1c70c852b
 	s = "NULL";
+	b = NULL;
 	if (check_flags(ft_count_flags(argc, argv)) == 0)
 		return (0);
 	s = add_argv(argc, argv);
@@ -49,6 +61,7 @@ int	main(int argc, char **argv)
 		printf("erreur\n");
 		return (free(s), 0);
 	}
+<<<<<<< HEAD
 	// ft_printf("%s\n", s);
 	a = stack_a(s);
 	// print_stack(a);
@@ -56,6 +69,16 @@ int	main(int argc, char **argv)
 	// print_stack_index(a);
 	simple_sort(&a, bench);
 	//print_bench(bench);
+=======
+
+	//ft_printf("%s\n", s);
+	a = stack_a(s);
+	//print_stack(a);
+	indexation(&a);
+	//print_stack_index(a);
+	//bucket_sort(&a);
+	radix_sort(&a, &b);
+>>>>>>> 0035c8f183ef70975ada00befb8f07e1c70c852b
 	// sa(&a);
 	print_stack(a);
 	free(s);
