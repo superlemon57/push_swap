@@ -6,7 +6,7 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 17:52:45 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/16 19:56:43 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/19 16:18:56 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	get_bucket_size(int n)
 		return (n / 15);
 }
 
-void	transfert_a_to_b(StackElement **a, StackElement **b)
+void	transfert_a_to_b(StackElement **a, StackElement **b,
+		t_count_operations *bench)
 {
 	int	i;
 	int	range;
@@ -37,17 +38,17 @@ void	transfert_a_to_b(StackElement **a, StackElement **b)
 	{
 		if ((*a)->index <= i)
 		{
-			pb(a, b);
-			rb(b);
+			pb(a, b, bench);
+			rb(b, bench);
 			i++;
 		}
 		else if ((*a)->index <= i + range)
 		{
-			pb(a, b);
+			pb(a, b, bench);
 			i++;
 		}
 		else
-			ra(a);
+			ra(a, bench);
 	}
 }
 
@@ -65,7 +66,7 @@ int	find_max_index(StackElement *b)
 	return (max);
 }
 
-void	push_b_to_a(StackElement **b, StackElement **a)
+void	push_b_to_a(StackElement **b, StackElement **a,  t_count_operations *bench)
 {
 	int	max_val;
 	int	pos;
@@ -79,24 +80,23 @@ void	push_b_to_a(StackElement **b, StackElement **a)
 		if (pos <= size / 2)
 		{
 			while ((*b)->index != max_val)
-				rb(b);
+				rb(b, bench);
 		}
 		else
 		{
 			while ((*b)->index != max_val)
-				rrb(b);
+				rrb(b, bench);
 		}
-		pa(a, b);
+		pa(a, b, bench);
 	}
 }
 
-void	bucket_sort(StackElement **a)
+void	bucket_sort(StackElement **a, t_count_operations *bench)
 {
 	StackElement	*b;
 
 	b = NULL;
 	indexation(a);
-	transfert_a_to_b(a, &b);
-	push_b_to_a(&b, a);
+	transfert_a_to_b(a, &b, bench);
+	push_b_to_a(&b, a, bench);
 }
-

@@ -6,7 +6,7 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:29:12 by tlopez            #+#    #+#             */
-/*   Updated: 2026/02/16 19:20:40 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/19 16:47:25 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,24 @@ int	find_pos(StackElement *a, int value)
 	return (-1);
 }
 
-void	bring_to_top(StackElement **a, int pos)
+void	bring_to_top(StackElement **a, int pos, t_count_operations *bench)
 {
 	int	size;
 
 	size = stack_size(*a);
-
 	if (pos <= size / 2)
 	{
 		while (pos-- > 0)
-			ra(a);
+			ra(a, bench);
 	}
 	else
 	{
 		while (pos++ < size)
-			rra(a);
+			rra(a, bench);
 	}
 }
 
-void	sort_three(StackElement **a)
+void	sort_three(StackElement **a, t_count_operations *bench)
 {
 	int	x;
 	int	y;
@@ -54,41 +53,42 @@ void	sort_three(StackElement **a)
 	x = (*a)->value;
 	y = (*a)->next->value;
 	z = (*a)->next->next->value;
-
 	if (x > y && y < z && x < z)
-		sa(a);
+		sa(a, bench);
 	else if (x > y && y > z)
 	{
-		sa(a);
-		rra(a);
+		sa(a, bench);
+		rra(a, bench);
 	}
 	else if (x > y && y < z && x > z)
-		ra(a);
+		ra(a, bench);
 	else if (x < y && y > z && x < z)
 	{
-		sa(a);
-		ra(a);
+		sa(a, bench);
+		ra(a, bench);
 	}
 	else if (x < y && y > z && x > z)
-		rra(a);
+		rra(a, bench);
 }
 
-void	simple_sort(StackElement **a, StackElement **b)
+void	simple_sort(StackElement **a,
+		t_count_operations *bench)
 {
-	int	min;
-	int	pos;
+	int				min;
+	int				pos;
+	StackElement	**b;
 
+	b = NULL;
 	if (is_sorted(*a))
 		return ;
 	while (stack_size(*a) > 3)
 	{
 		min = find_min(*a);
 		pos = find_pos(*a, min);
-
-		bring_to_top(a, pos);
-		pb(a, b);
+		bring_to_top(a, pos, bench);
+		pb(a, b, bench);
 	}
-	sort_three(a);
+	sort_three(a, bench);
 	while (*b)
-		pa(a, b);
+		pa(a, b, bench);
 }
