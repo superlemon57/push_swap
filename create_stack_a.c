@@ -6,7 +6,7 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 15:19:32 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/11 17:26:25 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/22 17:04:32 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	no_duplicate(StackElement *a)
 		{
 			if (current->value == runner->value)
 			{
-				write (1, "duplicate\n", 10);
+				ft_printf_fd(2, "duplicate\n");
 				return (0);
 			}
 			runner = runner->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi_mod.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlopez <tlopez@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 12:50:49 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/16 20:31:06 by tlopez           ###   ########.fr       */
+/*   Updated: 2026/02/22 16:55:09 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,3 @@ int	ft_atoi_mod( char *str)
 		return (write(2, "error\n", 6), 1);
 	return ((int)(sign * result));
 }
-// int	main(int argc, char **argv)
-// {
-// 	int	i;
-	
-// 	i = 1;
-// 	if (argc == 1)
-// 		return(0);
-// 	while (i < argc)
-// 	{
-// 		printf("%d\n", ft_atoi_mod(argv[i]));
-// 		i++;
-// 	}
-// 	return (0);
-// }
-

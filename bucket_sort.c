@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bucket_sort.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlopez <tlopez@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 17:52:45 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/16 19:56:43 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/22 15:34:28 by tlopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	get_bucket_size(int n)
 		return (n / 15);
 }
 
-void	transfert_a_to_b(StackElement **a, StackElement **b)
+void	transfert_a_to_b(StackElement **a, StackElement **b, t_count_operations *ops)
 {
 	int	i;
 	int	range;
@@ -37,17 +37,17 @@ void	transfert_a_to_b(StackElement **a, StackElement **b)
 	{
 		if ((*a)->index <= i)
 		{
-			pb(a, b);
-			rb(b);
+			pb(a, b, ops);
+			rb(b, ops);
 			i++;
 		}
 		else if ((*a)->index <= i + range)
 		{
-			pb(a, b);
+			pb(a, b, ops);
 			i++;
 		}
 		else
-			ra(a);
+			ra(a, ops);
 	}
 }
 
@@ -65,7 +65,7 @@ int	find_max_index(StackElement *b)
 	return (max);
 }
 
-void	push_b_to_a(StackElement **b, StackElement **a)
+void	push_b_to_a(StackElement **b, StackElement **a, t_count_operations *ops)
 {
 	int	max_val;
 	int	pos;
@@ -79,24 +79,23 @@ void	push_b_to_a(StackElement **b, StackElement **a)
 		if (pos <= size / 2)
 		{
 			while ((*b)->index != max_val)
-				rb(b);
+				rb(b, ops);
 		}
 		else
 		{
 			while ((*b)->index != max_val)
-				rrb(b);
+				rrb(b, ops);
 		}
-		pa(a, b);
+		pa(a, b, ops);
 	}
 }
 
-void	bucket_sort(StackElement **a)
+void	bucket_sort(StackElement **a, t_count_operations *ops)
 {
 	StackElement	*b;
 
 	b = NULL;
 	indexation(a);
-	transfert_a_to_b(a, &b);
-	push_b_to_a(&b, a);
+	transfert_a_to_b(a, &b, ops);
+	push_b_to_a(&b, a, ops);
 }
-

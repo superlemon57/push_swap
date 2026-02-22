@@ -6,7 +6,7 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:17:28 by mledda            #+#    #+#             */
-/*   Updated: 2025/11/26 11:28:58 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/22 16:59:26 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,3 @@ char	*ft_itoa(int n)
 	result[len] = '\0';
 	return (result);
 }
-
-// int main(void)
-// {
-//     printf("%s\n", ft_itoa(0));
-//     printf("%s\n", ft_itoa(32767));
-//     printf("%s\n", ft_itoa(-32768));
-//     printf("%s\n", ft_itoa(-98));
-// }

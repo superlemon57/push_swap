@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_adressp.c                                       :+:      :+:    :+:   */
+/*   ft_putnbru_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/07 14:43:09 by mledda            #+#    #+#             */
-/*   Updated: 2025/12/07 16:40:34 by mledda           ###   ########.fr       */
+/*   Created: 2026/02/22 15:26:24 by mledda            #+#    #+#             */
+/*   Updated: 2026/02/22 15:26:30 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_fd.h"
 
-int	ft_adressp(void const *p)
+int	ft_putnbru_fd(int fd, unsigned int n)
 {
-	int	i;
+	int				i;
+	unsigned long	nb;
 
+	nb = n;
 	i = 0;
-	if (!p)
-		i += ft_putstrcount("(nil)");
+	if (nb <= 9)
+		i += ft_putcharcount_fd(fd, nb + 48);
 	else
 	{
-		i += ft_putstrcount("0x");
-		i += ft_puthexacount((unsigned long)p);
+		i += ft_putnbru_fd(fd, nb / 10);
+		i += ft_putnbru_fd(fd, nb % 10);
 	}
 	return (i);
 }

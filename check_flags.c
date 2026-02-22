@@ -6,7 +6,7 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 11:48:29 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/04 14:36:38 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/22 16:54:29 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ int	check_flags(t_count_flag j)
 {
 	if (j.simple > 0 && (j.medium > 0 || j.complex > 0 || j.adaptive > 0))
 	{
-		printf ("erreur\n");
+		ft_printf_fd(2, "erreur\n");
 		return (0);
 	}
 	if (j.medium > 0 && (j.complex > 0 || j.adaptive > 0))
 	{
-		printf ("erreur\n");
+		ft_printf_fd(2, "erreur\n");
 		return (0);
 	}
 	if (j.complex > 0 && j.adaptive > 0)
 	{
-		printf ("erreur\n");
+		ft_printf_fd(2, "erreur\n");
 		return (0);
 	}
 	else

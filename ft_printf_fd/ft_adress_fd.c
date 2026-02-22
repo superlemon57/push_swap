@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstrcount.c                                   :+:      :+:    :+:   */
+/*   ft_adress_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/07 12:09:00 by mledda            #+#    #+#             */
-/*   Updated: 2025/12/07 16:39:09 by mledda           ###   ########.fr       */
+/*   Created: 2026/02/22 15:20:38 by mledda            #+#    #+#             */
+/*   Updated: 2026/02/22 15:32:43 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_fd.h"
 
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-
-int	ft_putstrcount(const char *s)
+int	ft_adress_fd(int fd, void const *p)
 {
 	int	i;
 
 	i = 0;
-	if (!s)
+	if (!p)
+		i += ft_putstrcount_fd(fd, "(nil)");
+	else
 	{
-		write(1, "(null)", 6);
-		return (6);
-	}
-	while (s[i] != '\0')
-	{
-		ft_putchar(s[i]);
-		i++;
+		i += ft_putstrcount_fd(fd, "0x");
+		i += ft_puthexacount_fd(fd, (unsigned long)p);
 	}
 	return (i);
 }

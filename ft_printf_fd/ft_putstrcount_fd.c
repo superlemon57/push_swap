@@ -1,19 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putcharcount.c                                  :+:      :+:    :+:   */
+/*   ft_putstrcount_fd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/07 12:56:11 by mledda            #+#    #+#             */
-/*   Updated: 2025/12/07 15:17:56 by mledda           ###   ########.fr       */
+/*   Created: 2026/02/22 15:26:54 by mledda            #+#    #+#             */
+/*   Updated: 2026/02/22 15:26:57 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_fd.h"
 
-int	ft_putcharcount(char c)
+void	ft_putchar_fd(int fd, char c)
 {
-	write(1, &c, 1);
-	return (1);
+	write(fd, &c, 1);
+}
+
+int	ft_putstrcount_fd(int fd, const char *s)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+	{
+		write(fd, "(null)", 6);
+		return (6);
+	}
+	while (s[i] != '\0')
+	{
+		ft_putchar_fd(fd, s[i]);
+		i++;
+	}
+	return (i);
 }

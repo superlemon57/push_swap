@@ -6,7 +6,7 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 17:53:16 by mledda            #+#    #+#             */
-/*   Updated: 2025/11/19 17:27:23 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/22 16:59:31 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 	stronc[j] = '\0';
 	return (stronc);
 }
-// int	main()
-// {
-// 	char	*test = "   xxx   xxx";
-// 	char	*d = " x";	
-// 	char *a = ft_strtrim(test, d);
-// 	printf("%s", a);
-// 	free(a);
-// }

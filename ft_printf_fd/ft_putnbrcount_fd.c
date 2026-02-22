@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putuphexacount.c                                :+:      :+:    :+:   */
+/*   ft_putnbrcount_fd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/07 12:52:26 by mledda            #+#    #+#             */
-/*   Updated: 2025/12/07 15:18:18 by mledda           ###   ########.fr       */
+/*   Created: 2025/12/07 12:58:33 by mledda            #+#    #+#             */
+/*   Updated: 2026/02/22 15:25:57 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_fd.h"
 
-int	ft_putuphexacount(unsigned int n)
+int	ft_putnbrcount_fd(int fd, int n)
 {
-	char	*base;
+	long	nb;
 	int		i;
 
-	base = "0123456789ABCDEF";
+	nb = n;
 	i = 0;
-	if (n < 16)
-		i += ft_putcharcount(base[n]);
+	if (nb < 0)
+	{
+		i += ft_putcharcount_fd(fd, '-');
+		nb = -nb;
+	}
+	if (nb < 10)
+		i += ft_putcharcount_fd(fd, nb + 48);
 	else
 	{
-		i += ft_putuphexacount(n / 16);
-		i += ft_putuphexacount(n % 16);
+		i += ft_putnbrcount_fd(fd, nb / 10);
+		i += ft_putnbrcount_fd(fd, nb % 10);
 	}
 	return (i);
 }

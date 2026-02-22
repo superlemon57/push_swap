@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_printf_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 12:54:59 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/11 14:13:24 by mledda           ###   ########.fr       */
+/*   Created: 2026/02/22 15:20:56 by mledda            #+#    #+#             */
+/*   Updated: 2026/02/22 16:58:34 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_fd.h"
 
-int	ft_printf(const char *format, ...)
+int	ft_printf_fd(int fd, const char *format, ...)
 {
 	int		i;
 	int		count;
@@ -28,25 +28,12 @@ int	ft_printf(const char *format, ...)
 		if (format[i] == '%')
 		{
 			i++;
-			count += ft_which_index(format[i], ap);
+			count += ft_which_index(fd, format[i], ap);
 		}
 		else
-			count += write(1, &format[i], 1);
+			count += write(fd, &format[i], 1);
 		i++;
 	}
 	return (count);
 	va_end(ap);
 }
-
-/*
-int	main ()
-{
-	char	*s = "la plus belle ";
-	int	i = 25;
-	
-	printf("%s\n, %d\n", s, i);
-	ft_printf("%s\n, %d\n", s, i);
-	return (0);
-	
-}
-*/

@@ -6,7 +6,7 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 11:48:18 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/15 16:24:51 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/22 16:54:58 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	print_stack(Stack st)
 {
 	while (!is_empty_stack(st))
 	{
-		printf("%d\n", st->value);
+		ft_printf_fd(2, "%d\n", st->value);
 		st = st->next;
 	}
 }
