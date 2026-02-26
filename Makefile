@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mledda <mledda@student.42.fr>              +#+  +:+       +#+         #
+#    By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/16 20:03:43 by mledda            #+#    #+#              #
-#    Updated: 2026/02/22 17:02:46 by mledda           ###   ########.fr        #
+#    Updated: 2026/02/26 13:43:34 by tlopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LIBFT_A = $(LIBFT_DIR)/libft.a
 FT_PRINTF_FD_A = $(FT_PRINTF_FD_DIR)/ft_printf_fd.a
 
 CC	= cc
-CFLAGS	= -Wall -Wextra -Werror -I. -I$(LIBFT_DIR) -I$(FT_PRINT_FD_DIR) -fsanitize=address,undefined,leak -g3
+CFLAGS	= -Wall -Wextra -Werror -I. -I$(LIBFT_DIR) -I$(FT_PRINT_FD_DIR) -fsanitize=address,undefined,leak -g3 -std=c99
 RM	= rm -f
 
 all: $(NAME)
