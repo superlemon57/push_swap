@@ -1,0 +1,8 @@
+Disorder: 48.88%
+strategy: bucket_sort
+--- Operations ---
+pa: 100 | pb: 100
+sa: 0 | sb: 0 | ss: 0
+ra: 112 | rb: 142 | rr: 0
+rra: 0 | rrb: 120 | rrr: 0
+Total: 574

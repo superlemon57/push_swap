@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 11:47:50 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/26 14:57:30 by tlopez           ###   ########.fr       */
+/*   Updated: 2026/02/26 17:52:30 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	main(int argc, char **argv)
 
 	choose_sort(&a, &ops, flags);
 
-	print_stack(a);
+	// print_stack(a);
 
 	free(s);
 	free_stack(a);
