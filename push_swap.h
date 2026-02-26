@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlopez <tlopez@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 11:47:37 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/22 16:51:49 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/26 14:51:51 by tlopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int					is_sorted(StackElement *a);
 int					get_bucket_size(int n);
 int					find_max_index(StackElement *b);
 int					get_pos(StackElement *stack, int target_index);
+void				choose_sort(StackElement **a, t_count_operations *ops, t_count_flag flags);
 
 /* operations - swap */
 void				swap(StackElement **s);
@@ -130,7 +131,7 @@ void				rrr(StackElement **a, StackElement **b, t_count_operations *ops);
 void				transfert_a_to_b(StackElement **a, StackElement **b, t_count_operations *ops);
 void				push_b_to_a(StackElement **b, StackElement **a, t_count_operations *ops);
 void				bucket_sort(StackElement **a, t_count_operations *ops);
-void				radix_sort(StackElement **a, StackElement **b, t_count_operations *ops);
+void				radix_sort(StackElement **a, t_count_operations *ops);
 void				bring_to_top(StackElement **a, int pos, t_count_operations *ops);
 void				sort_three(StackElement **a, t_count_operations *ops);
 void				simple_sort(StackElement **a, t_count_operations *ops);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 11:47:50 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/22 17:10:25 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/26 14:57:30 by tlopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,37 +56,39 @@ void    print_stack_index(StackElement *st)
 	}
 }
 
+
 int	main(int argc, char **argv)
 {
 	char				*s;
 	StackElement		*a;
-	//StackElement		*b;
 	t_count_operations	ops;
+	t_count_flag		flags;
 
-	s = "NULL";
-	//b = NULL;
+	a = NULL;
+	s = NULL;
 	init_operations(&ops);
-	if (check_flags(ft_count_flags(argc, argv)) == 0)
+
+	flags = ft_count_flags(argc, argv);
+	if (!check_flags(flags))
 		return (0);
+
 	s = add_argv(argc, argv);
 	if (!s)
 		return (0);
-	if (check_s(s) == 0)
+	if (!check_s(s))
 	{
-		ft_printf_fd(2, "ERROR\n");
-		return (free(s), 0);
+		ft_printf_fd(2, "sign error\n");
+		free(s);
+		return (0);
 	}
-	//ft_printf("%s\n", s);
+
 	a = stack_a(s);
-	//print_stack(a);
 	indexation(&a);
-	//print_stack_index(a);
-	//bucket_sort(&a, &ops);
-	simple_sort(&a, &ops);
-	//radix_sort(&a, &b, &ops);
-	// sa(&a);
+
+	choose_sort(&a, &ops, flags);
+
 	print_stack(a);
-	print_operations(&ops);
+
 	free(s);
 	free_stack(a);
 	return (0);
