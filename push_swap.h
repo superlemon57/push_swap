@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlopez <tlopez@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 11:47:37 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/22 16:51:49 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/26 16:02:57 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void				rrr(StackElement **a, StackElement **b, t_count_operations *ops);
 void				transfert_a_to_b(StackElement **a, StackElement **b, t_count_operations *ops);
 void				push_b_to_a(StackElement **b, StackElement **a, t_count_operations *ops);
 void				bucket_sort(StackElement **a, t_count_operations *ops);
-void				radix_sort(StackElement **a, StackElement **b, t_count_operations *ops);
+void				radix_sort(StackElement **a, t_count_operations *ops);
 void				bring_to_top(StackElement **a, int pos, t_count_operations *ops);
 void				sort_three(StackElement **a, t_count_operations *ops);
 void				simple_sort(StackElement **a, t_count_operations *ops);
@@ -138,5 +138,6 @@ void				simple_sort(StackElement **a, t_count_operations *ops);
 /* operations counter */
 void				init_operations(t_count_operations *ops);
 void				print_operations(t_count_operations *ops);
+float				compute_disorder_indexed(StackElement *a);
 
 #endif

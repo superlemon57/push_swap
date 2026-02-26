@@ -6,7 +6,7 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 11:47:50 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/22 17:10:25 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/26 15:59:28 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	main(int argc, char **argv)
 	a = stack_a(s);
 	//print_stack(a);
 	indexation(&a);
+	printf("%f\n",compute_disorder_indexed(a));
 	//print_stack_index(a);
 	//bucket_sort(&a, &ops);
 	simple_sort(&a, &ops);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   radix_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlopez <tlopez@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 18:07:27 by tlopez            #+#    #+#             */
-/*   Updated: 2026/02/22 15:40:24 by tlopez           ###   ########.fr       */
+/*   Updated: 2026/02/26 16:03:26 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,16 @@ static int	get_max_bits(StackElement *stack)
 	return (max_bits);
 }
 
-void	radix_sort(StackElement **a, StackElement **b, t_count_operations *ops)
+void	radix_sort(StackElement **a, t_count_operations *ops)
 {
 	int				i;
 	int				j;
 	int				size;
 	int				max_bits;
 	StackElement	*current;
+	StackElement	*b;
 
+	b = NULL;
 	i = 0;
 	size = stack_size(*a);
 	max_bits = get_max_bits(*a);
@@ -50,11 +52,11 @@ void	radix_sort(StackElement **a, StackElement **b, t_count_operations *ops)
 			if (((current->index >> i) & 1) == 1)
 				ra(a, ops);
 			else
-				pb(a, b, ops);
+				pb(a, &b, ops);
 			j++;
 		}
-		while (*b)
-			pa(a, b, ops);
+		while (b)
+			pa(a, &b, ops);
 		i++;
 	}
 }
