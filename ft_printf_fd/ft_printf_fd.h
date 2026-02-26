@@ -6,7 +6,7 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 12:45:54 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/22 15:23:10 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/26 17:15:22 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ int		ft_puthexacount_fd(int fd, unsigned long n);
 int		ft_putuphexacount_fd(int fd, unsigned int n);
 int		ft_putnbru_fd(int fd, unsigned int n);
 int		ft_adress_fd(int fd, void const *p);
+int 	ft_putfloat_fd(int fd, double n, int precision);
 
 #endif

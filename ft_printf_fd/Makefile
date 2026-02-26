@@ -7,7 +7,7 @@ RM	= rm -f
 
 SRC	=	ft_printf_fd.c ft_which_index.c ft_putstrcount_fd.c\
 		ft_putcharcount_fd.c ft_puthexacount_fd.c ft_putuphexacount_fd.c ft_putnbrcount_fd.c\
-		ft_putnbru_fd.c ft_adress_fd.c\
+		ft_putnbru_fd.c ft_adress_fd.c ft_putfloat_fd.c\
 
 OBJ	= $(SRC:.c=.o)
 

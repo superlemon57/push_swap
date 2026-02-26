@@ -3,36 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   choose_sort.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+        */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 14:28:38 by tlopez            #+#    #+#             */
-/*   Updated: 2026/02/26 14:52:27 by tlopez           ###   ########.fr       */
+/*   Updated: 2026/02/26 17:28:18 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	execute_sort(StackElement **a,
-				t_count_operations *ops,
-				t_count_flag flags)
+float	compute_disorder_indexed(StackElement *a)
 {
+	long			mistakes;
+	long			total;
+	StackElement	*outer;
+	StackElement	*inner;
+
+	if (!a || !a->next)
+		return (0.0);
+	mistakes = 0;
+	total = 0;
+	outer = a;
+	while (outer->next)
+	{
+		inner = outer->next;
+		while (inner)
+		{
+			total++;
+			if (outer->index > inner->index)
+				mistakes++;
+			inner = inner->next;
+		}
+		outer = outer->next;
+	}
+	return ((float)mistakes / total);
+}
+
+static void	execute_sort(StackElement **a, t_count_operations *ops,
+		t_count_flag flags)
+{
+	float	disorder;
+
+	disorder = compute_disorder_indexed(*a);
 	if (flags.simple)
 		simple_sort(a, ops);
 	else if (flags.medium)
 		bucket_sort(a, ops);
 	else if (flags.complex)
 		radix_sort(a, ops);
-	// else if (flags.adaptive)
-	// 	adaptive_sort(a, ops);
-	else
-		simple_sort(a, ops);
+	else // adaptive
+	{
+		if (disorder < 0.2)
+			simple_sort(a, ops);
+		else if (disorder < 0.5)
+			bucket_sort(a, ops);
+		else
+			radix_sort(a, ops);
+	}
+
+	if (flags.bench)
+	{
+		print_operations(ops);
+		ft_printf_fd(2, "Disorder: %f%%\n", disorder * 100);
+	}
 }
 
-void	choose_sort(StackElement **a,
-			t_count_operations *ops,
-			t_count_flag flags)
+void choose_sort(StackElement * *a, t_count_operations * ops,
+	t_count_flag flags)
 {
 	execute_sort(a, ops, flags);
-	if (flags.bench)
-		print_operations(ops);
 }

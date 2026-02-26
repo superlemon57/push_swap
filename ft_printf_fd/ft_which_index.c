@@ -6,7 +6,7 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 14:00:12 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/22 15:27:40 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/26 17:18:56 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ int	ft_which_index(int fd, char c, va_list ap)
 		return (ft_putuphexacount_fd(fd, va_arg(ap, unsigned int)));
 	if (c == '%')
 		return (ft_putcharcount_fd(fd, '%'));
+	if (c == 'f')
+		return (ft_putfloat_fd(fd, va_arg(ap, double), 2));
 	return (0);
 }
