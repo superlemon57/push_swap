@@ -6,7 +6,7 @@
 /*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 14:28:38 by tlopez            #+#    #+#             */
-/*   Updated: 2026/02/26 17:47:42 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/26 18:01:00 by mledda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static void	execute_sort(StackElement **a, t_count_operations *ops,
 		else
 			radix_sort(a, ops);
 	}
-
 	if (flags.bench)
 	{
 		ft_printf_fd(2, "Disorder: %f%%\n", disorder * 100);
@@ -71,14 +70,7 @@ static void	execute_sort(StackElement **a, t_count_operations *ops,
 		else if (flags.complex)
 			ft_printf_fd(2, "strategy: radix_sort\n");
 		else // adaptive
-		{
-			if (disorder < 0.2)
-				ft_printf_fd(2, "strategy: simple_sort\n");
-			else if (disorder < 0.5)
-				ft_printf_fd(2, "strategy: bucket_sort\n");
-			else
-				ft_printf_fd(2, "strategy: radix_sort\n");
-		}
+			ft_printf_fd(2, "strategy: adaptive\n");
 		print_operations(ops);
 	}
 }
