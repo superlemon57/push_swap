@@ -3,16 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi_mod.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 12:50:49 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/22 16:55:09 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/28 03:51:32 by tlopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	ft_atoi_mod( char *str)
+static void	print_error_and_exit(void)
+{
+	write(2, "error\n", 6);
+	exit(1);
+}
+
+int	ft_atoi_mod(char *str)
 {
 	int		i;
 	long	result;
@@ -29,13 +35,13 @@ int	ft_atoi_mod( char *str)
 			sign = -1;
 	}
 	if (!(str[i] >= '0' && str[i] <= '9') && str[i] != '\0')
-		return (write(2, "error_sign\n", 11), 1);
+		print_error_and_exit();
 	while (str[i] <= '9' && str[i] >= '0')
 	{
 		result = (10 * result) + (str[i] - '0');
 		i++;
 	}
 	if ((sign * result) > 2147483647 || (sign * result) < -2147483648)
-		return (write(2, "error\n", 6), 1);
+		print_error_and_exit();
 	return ((int)(sign * result));
 }

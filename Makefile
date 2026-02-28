@@ -6,7 +6,7 @@
 #    By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/16 20:03:43 by mledda            #+#    #+#              #
-#    Updated: 2026/02/26 14:50:53 by tlopez           ###   ########.fr        #
+#    Updated: 2026/02/28 03:14:01 by tlopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,12 @@ NAME = push_swap
 LIBFT_DIR = ./libft
 FT_PRINTF_FD_DIR = ./ft_printf_fd
 
-SRC	 =		add_argv.c check_flags.c create_stack_a.c create_stack.c flags.c main.c push.c\
-			reverse_rotate.c rotate.c swap.c ft_atoi_mod.c bucket_sort_utils.c simple_sort_utils.c\
-			bucket_sort.c bucket_sort_utils_2.c radix_sort.c simple_sort.c choose_sort.c\
+SRC  =  ft_parse_args.c ft_flags_check.c ft_stack_init.c ft_stack_core.c \
+        ft_flags_detect.c main.c ft_op_push.c \
+        ft_op_reverse_rotate.c ft_op_rotate.c ft_op_swap.c ft_atoi_mod.c \
+        ft_indexation.c ft_stack_utils.c \
+        ft_bucket_sort.c ft_stack_pos.c ft_radix_sort.c ft_sort_small.c \
+        ft_sort_dispatcher.c
 		
 OBJ		= $(SRC:.c=.o)
 

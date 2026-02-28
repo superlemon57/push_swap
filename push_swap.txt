@@ -1,0 +1,1906 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_adress_fd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/22 15:20:38 by mledda            #+#    #+#             */
+/*   Updated: 2026/02/22 15:32:43 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf_fd.h"
+
+int	ft_adress_fd(int fd, void const *p)
+{
+	int	i;
+
+	i = 0;
+	if (!p)
+		i += ft_putstrcount_fd(fd, "(nil)");
+	else
+	{
+		i += ft_putstrcount_fd(fd, "0x");
+		i += ft_puthexacount_fd(fd, (unsigned long)p);
+	}
+	return (i);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_fd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/22 15:20:56 by mledda            #+#    #+#             */
+/*   Updated: 2026/02/22 16:58:34 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf_fd.h"
+
+int	ft_printf_fd(int fd, const char *format, ...)
+{
+	int		i;
+	int		count;
+	va_list	ap;
+
+	i = 0;
+	count = 0;
+	va_start (ap, format);
+	if (!format)
+		return (0);
+	while (format[i])
+	{
+		if (format[i] == '%')
+		{
+			i++;
+			count += ft_which_index(fd, format[i], ap);
+		}
+		else
+			count += write(fd, &format[i], 1);
+		i++;
+	}
+	return (count);
+	va_end(ap);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_fd.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/03 12:45:54 by mledda            #+#    #+#             */
+/*   Updated: 2026/02/26 17:15:22 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef FT_PRINTF_FD_H
+# define FT_PRINTF_FD_H
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdarg.h>
+
+int		ft_printf_fd(int fd, const char *format, ...);
+int		ft_which_index(int fd, char c, va_list ap);
+int		ft_putstrcount_fd(int fd, const char *s);
+int		ft_putnbrcount_fd(int fd, int n);
+int		ft_putcharcount_fd(int fd, char c);
+int		ft_puthexacount_fd(int fd, unsigned long n);
+int		ft_putuphexacount_fd(int fd, unsigned int n);
+int		ft_putnbru_fd(int fd, unsigned int n);
+int		ft_adress_fd(int fd, void const *p);
+int 	ft_putfloat_fd(int fd, double n, int precision);
+
+#endif
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putcharcount_fd.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/22 15:23:33 by mledda            #+#    #+#             */
+/*   Updated: 2026/02/22 15:23:51 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf_fd.h"
+
+int	ft_putcharcount_fd(int fd, char c)
+{
+	write(fd, &c, 1);
+	return (1);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putfloat_fd.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/26 17:01:37 by mledda            #+#    #+#             */
+/*   Updated: 2026/02/26 17:19:51 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf_fd.h"
+
+int	ft_putfloat_fd(int fd, double n, int precision)
+{
+	long	int_part;
+	double	diff;
+	int		digit;
+
+	int_part = (long)n;
+	diff = n - (double)int_part;
+	ft_putnbrcount_fd(fd, int_part);
+	write(fd, ".", 1);
+	while (precision--)
+	{
+		diff *= 10;
+		digit = (int)diff;
+		ft_putcharcount_fd(fd, digit + '0');
+		diff -= digit;
+	}
+	return(0);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_puthexacount_fd.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/22 15:24:34 by mledda            #+#    #+#             */
+/*   Updated: 2026/02/22 15:25:47 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf_fd.h"
+
+int	ft_puthexacount_fd(int fd, unsigned long n)
+{
+	char	*base;
+	int		i;
+
+	base = "0123456789abcdef";
+	i = 0;
+	if (n < 16)
+		i += ft_putcharcount_fd(fd, base[n]);
+	else
+	{
+		i += ft_puthexacount_fd(fd, n / 16);
+		i += ft_puthexacount_fd(fd, n % 16);
+	}
+	return (i);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putnbrcount_fd.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/07 12:58:33 by mledda            #+#    #+#             */
+/*   Updated: 2026/02/22 15:25:57 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf_fd.h"
+
+int	ft_putnbrcount_fd(int fd, int n)
+{
+	long	nb;
+	int		i;
+
+	nb = n;
+	i = 0;
+	if (nb < 0)
+	{
+		i += ft_putcharcount_fd(fd, '-');
+		nb = -nb;
+	}
+	if (nb < 10)
+		i += ft_putcharcount_fd(fd, nb + 48);
+	else
+	{
+		i += ft_putnbrcount_fd(fd, nb / 10);
+		i += ft_putnbrcount_fd(fd, nb % 10);
+	}
+	return (i);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putnbru_fd.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/22 15:26:24 by mledda            #+#    #+#             */
+/*   Updated: 2026/02/22 15:26:30 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf_fd.h"
+
+int	ft_putnbru_fd(int fd, unsigned int n)
+{
+	int				i;
+	unsigned long	nb;
+
+	nb = n;
+	i = 0;
+	if (nb <= 9)
+		i += ft_putcharcount_fd(fd, nb + 48);
+	else
+	{
+		i += ft_putnbru_fd(fd, nb / 10);
+		i += ft_putnbru_fd(fd, nb % 10);
+	}
+	return (i);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putstrcount_fd.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/22 15:26:54 by mledda            #+#    #+#             */
+/*   Updated: 2026/02/22 15:26:57 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf_fd.h"
+
+void	ft_putchar_fd(int fd, char c)
+{
+	write(fd, &c, 1);
+}
+
+int	ft_putstrcount_fd(int fd, const char *s)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+	{
+		write(fd, "(null)", 6);
+		return (6);
+	}
+	while (s[i] != '\0')
+	{
+		ft_putchar_fd(fd, s[i]);
+		i++;
+	}
+	return (i);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putuphexacount_fd.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/22 15:27:17 by mledda            #+#    #+#             */
+/*   Updated: 2026/02/22 15:27:26 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf_fd.h"
+
+int	ft_putuphexacount_fd(int fd, unsigned int n)
+{
+	char	*base;
+	int		i;
+
+	base = "0123456789ABCDEF";
+	i = 0;
+	if (n < 16)
+		i += ft_putcharcount_fd(fd, base[n]);
+	else
+	{
+		i += ft_putuphexacount_fd(fd, (n / 16));
+		i += ft_putuphexacount_fd(fd, (n % 16));
+	}
+	return (i);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_which_index.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/03 14:00:12 by mledda            #+#    #+#             */
+/*   Updated: 2026/02/26 17:18:56 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf_fd.h"
+#include <stdio.h> 
+
+int	ft_which_index(int fd, char c, va_list ap)
+{
+	if (c == 'c')
+		return (ft_putcharcount_fd(fd, va_arg(ap, int)));
+	if (c == 'd' || c == 'i')
+		return (ft_putnbrcount_fd(fd, va_arg(ap, int)));
+	if (c == 's')
+		return (ft_putstrcount_fd(fd, va_arg(ap, char *)));
+	if (c == 'p')
+		return (ft_adress_fd(fd, va_arg(ap, void *)));
+	if (c == 'u')
+		return (ft_putnbru_fd(fd, va_arg(ap, unsigned int)));
+	if (c == 'x')
+		return (ft_puthexacount_fd(fd, va_arg(ap, unsigned int)));
+	if (c == 'X')
+		return (ft_putuphexacount_fd(fd, va_arg(ap, unsigned int)));
+	if (c == '%')
+		return (ft_putcharcount_fd(fd, '%'));
+	if (c == 'f')
+		return (ft_putfloat_fd(fd, va_arg(ap, double), 2));
+	return (0);
+}
+NAME	= ft_printf_fd.a
+
+CC	= cc
+CFLAGS	= -Wall -Wextra -Werror
+AR	= ar rcs
+RM	= rm -f
+
+SRC	=	ft_printf_fd.c ft_which_index.c ft_putstrcount_fd.c\
+		ft_putcharcount_fd.c ft_puthexacount_fd.c ft_putuphexacount_fd.c ft_putnbrcount_fd.c\
+		ft_putnbru_fd.c ft_adress_fd.c ft_putfloat_fd.c\
+
+OBJ	= $(SRC:.c=.o)
+
+all: $(NAME)
+
+$(NAME): $(OBJ)
+	$(AR) $(NAME) $(OBJ)
+
+%.o: %.c ft_printf_fd.h
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	$(RM) $(OBJ)
+
+fclean: clean
+	$(RM) $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re
+
+
+#include "ft_printf_fd.h"
+#include <stdio.h>
+
+int main(void)
+{
+    // Test sur stdout (1)
+    ft_printf_fd(1, "Ceci va dans stdout (comme sa, pb...)\n");
+    
+    // Test sur stderr (2)
+    ft_printf_fd(2, "[bench] Ceci va dans stderr (statistiques)\n");
+    
+    return (0);
+}/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/16 11:25:05 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/16 11:49:19 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+int	ft_atoi(const char *str)
+{
+	int	i;
+	int	result;
+	int	sign;
+
+	result = 0;
+	sign = 1;
+	i = 0;
+	while (str[i] == 32 || (str[i] <= 13 && str[i] >= 9))
+		i++;
+	if (str[i] == '+' && str[i + 1] != '-')
+		i++;
+	if (str[i] == '-')
+	{
+		sign = -sign;
+		i++;
+	}
+	while (str[i] <= '9' && str[i] >= '0')
+	{
+		result = (10 * result) + (str[i] - '0');
+		i++;
+	}
+	return (sign * result);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/11 14:56:39 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/11 15:19:02 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+void	ft_bzero(void *s, size_t n)
+{
+	size_t				i;
+	unsigned char		*ptr;
+
+	ptr = (unsigned char *)s;
+	i = 0;
+	while (i < n)
+	{
+		ptr[i] = '\0';
+		i++;
+	}
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/16 12:01:47 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/16 13:46:30 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	unsigned char	*p;
+	size_t			i;
+	size_t			total;
+
+	total = nmemb * size;
+	i = 0;
+	if (nmemb != 0 && total / nmemb != size)
+		return (NULL);
+	p = malloc (total);
+	if (p == NULL)
+		return (NULL);
+	while (i < total)
+	{
+		p[i] = 0;
+		i++;
+	}
+	return (p);
+	free(p);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/05 17:10:06 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/11 11:37:13 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+int	ft_isalnum(int c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
+		|| (c >= '0' && c <= '9'))
+		return (1);
+	else
+		return (0);
+}
+
+/*
+#include <stdio.h>
+
+int	main(void)
+{
+	int l = 1;
+
+	while(l != EOF)
+	{
+		write(1,"Entrez un caractere: ", 21);
+		l = getchar();
+		if (ft_isalnum(l))
+			write(1, "\nIs alnum\n", 10);
+		else
+			write(1, "\nNot alnum\n", 11);
+		getchar();
+	}
+}*/
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/05 14:58:15 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/11 11:39:02 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+int	ft_isalpha(int c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	else
+		return (0);
+}
+
+/*
+#include <stdio.h>
+
+int	main(void)
+{
+	int l = 1;
+
+	while(l != EOF)
+	{
+		write(1,"Entrez une lettre: ", 19);
+		l = getchar();
+		if (ft_isalpha(l))
+			write(1, "\nIs alpha\n", 10);
+		else
+			write(1, "\nNot alpha\n", 11);
+		getchar();
+	}
+}*/
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/11 11:20:02 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/11 11:23:29 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+int	ft_isascii(int c)
+{
+	if (c <= 127 && c >= 0)
+		return (1);
+	else
+		return (0);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/05 16:57:19 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/09 18:19:06 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
+}
+
+/*
+#include <stdio.h>
+
+int	main(void)
+{
+	int l = 1;
+
+	while(l != EOF)
+	{
+		write(1,"Entrez un chiffre: ", 19);
+		l = getchar();
+		if (ft_isdigit(l))
+			write(1, "\nIs digit\n", 10);
+		else
+			write(1, "\nNot digit\n", 11);
+		getchar();
+	}
+}
+*/
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/11 11:29:54 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/11 11:55:55 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+int	ft_isprint(int c)
+{
+	if (c <= 126 && c >= 32)
+		return (1);
+	else
+		return (0);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/26 11:17:28 by mledda            #+#    #+#             */
+/*   Updated: 2026/02/22 16:59:26 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+static long int	len_number(long n)
+{
+	long int	count;
+
+	count = 0;
+	if (n < 0)
+	{
+		count++;
+		n = -n;
+	}
+	if (n == 0)
+		count++;
+	while (n > 0)
+	{
+		n = (n / 10);
+		count++;
+	}
+	return (count);
+}
+
+char	*ft_itoa(int n)
+{
+	long	nb;
+	size_t	i;
+	char	*result;
+	int		len;
+
+	nb = n;
+	len = len_number(nb);
+	i = len - 1;
+	result = (char *) malloc((len + 1) * sizeof(char));
+	if (!result)
+		return (NULL);
+	if (nb == 0)
+		result[0] = '0';
+	if (nb < 0)
+		nb = (-1 * nb);
+	while (nb != 0)
+	{
+		result[i] = ((nb % 10) + 48);
+		nb = nb / 10;
+		i--;
+	}
+	if (n < 0)
+		result[0] = '-';
+	result[len] = '\0';
+	return (result);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/29 13:54:43 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/29 14:01:19 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
+	t_list	*last;
+
+	last = ft_lstlast(*lst);
+	if (!last)
+		*lst = new;
+	else
+		last->next = new;
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/26 16:11:42 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/26 17:21:22 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+void	ft_lstadd_front(t_list **lst, t_list *new)
+{
+	new->next = *lst;
+	*lst = new;
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/29 12:26:11 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/29 12:47:45 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+void	ft_lstclear(t_list **lst, void (*del)(void*))
+{
+	t_list	*tmp;
+
+	if (!lst)
+		return ;
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		*lst = tmp;
+	}
+	free(*lst);
+	*lst = NULL;
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/29 12:03:35 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/29 12:47:07 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+void	ft_lstdelone(t_list *lst, void (*del)(void*))
+{
+	del (lst->content);
+	free (lst);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/29 12:56:51 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/29 13:14:45 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+void	ft_lstiter(t_list *lst, void (*f)(void *))
+{
+	t_list	*tmp;
+
+	tmp = lst;
+	if (!lst)
+		return ;
+	while (tmp != NULL)
+	{
+		(*f)(tmp->content);
+		tmp = tmp->next;
+	}
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/26 16:50:33 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/29 12:26:01 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+t_list	*ft_lstlast(t_list *lst)
+{
+	t_list	*tmp;
+
+	if (!lst)
+		return (NULL);
+	tmp = lst;
+	while (tmp->next)
+		tmp = tmp->next;
+	return (tmp);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/29 13:28:24 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/29 13:57:16 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+{
+	t_list	*new_list;
+	t_list	*new_node;
+
+	if (!lst || !f || !del)
+		return (NULL);
+	new_list = NULL;
+	while (lst)
+	{
+		new_node = ft_lstnew(f(lst->content));
+		if (!new_node)
+		{
+			ft_lstclear(&new_list, del);
+			return (NULL);
+		}
+		ft_lstadd_back(&new_list, new_node);
+		lst = lst->next;
+	}
+	return (new_list);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/26 15:39:24 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/26 15:53:56 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+t_list	*ft_lstnew(void *content)
+{
+	t_list	*newnode;
+
+	newnode = malloc(sizeof(t_list));
+	if (!newnode)
+		return (NULL);
+	newnode->content = content;
+	newnode->next = NULL;
+	return (newnode);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/26 16:56:28 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/29 12:50:44 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+int	ft_lstsize(t_list *lst)
+{
+	size_t	i;
+
+	i = 0;
+	while (lst != NULL)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/12 14:06:56 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/12 15:02:28 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+void	*ft_memchr(const void *s, int c, size_t n)
+{
+	size_t			i;
+	unsigned char	cc;
+	unsigned char	*ss;
+
+	i = 0;
+	cc = (unsigned char) c;
+	ss = (unsigned char *) s;
+	while (i < n)
+	{
+		if (ss[i] == cc)
+			return ((void *)&ss[i]);
+		i++;
+	}
+	return (NULL);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/12 14:42:10 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/12 14:58:48 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
+{
+	size_t			i;
+	unsigned char	*ss1;
+	unsigned char	*ss2;
+
+	ss1 = (unsigned char *)s1;
+	ss2 = (unsigned char *)s2;
+	i = 0;
+	while (i < n)
+	{
+		if (ss1[i] != ss2[i])
+			return (ss1[i] - ss2[i]);
+		i++;
+	}
+	return (0);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/11 15:22:08 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/11 16:12:42 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	size_t			i;
+	size_t			j;
+	unsigned char	*dest1;
+	unsigned char	*src1;
+
+	i = 0;
+	j = 0;
+	dest1 = (unsigned char *)dest;
+	src1 = (unsigned char *)src;
+	while (i < n)
+	{
+		dest1[j] = src1[i];
+		i++;
+		j++;
+	}
+	return (dest);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/11 15:50:04 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/11 18:58:47 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "stdlib.h"
+
+void	*ft_memmove(void *dest, const void *src, size_t n)
+{
+	size_t				i;
+	unsigned char		*dest1;
+	const unsigned char	*src1;
+
+	i = 0;
+	src1 = (const unsigned char *)src;
+	dest1 = (unsigned char *)dest;
+	if (dest < src)
+	{
+		while (i < n)
+		{
+			dest1[i] = src1[i];
+			i++;
+		}
+	}
+	else
+	{
+		while (n != 0)
+		{
+			dest1[n - 1] = src1[n - 1];
+			n--;
+		}
+	}
+	return (dest);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/11 14:21:04 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/11 14:47:03 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+void	*ft_memset(void *s, int c, size_t n)
+{
+	size_t			i;
+	unsigned char	*ptr;
+
+	ptr = (unsigned char *)s;
+	i = 0;
+	while (i < n)
+	{
+		ptr[i] = c;
+		i++;
+	}
+	return (s);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/26 11:37:01 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/26 11:38:19 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/26 12:30:31 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/26 12:51:26 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+void	ft_putendl_fd(char *s, int fd)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i])
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+	write(fd, "\n", 1);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/26 12:53:45 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/26 13:19:12 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+void	ft_putnbr_fd(int n, int fd)
+{
+	long	nb;
+
+	nb = n;
+	if (nb < 0)
+	{
+		ft_putchar_fd('-', fd);
+		nb = -nb;
+	}
+	if (nb >= 0 && nb < 10)
+		ft_putchar_fd((nb + 48), fd);
+	else
+	{
+		ft_putnbr_fd(nb / 10, fd);
+		ft_putnbr_fd(nb % 10, fd);
+	}
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/26 11:38:46 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/26 12:28:52 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i])
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/26 11:41:52 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/26 11:47:30 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+static size_t	count_world(char const *s, char c)
+{
+	size_t	count;
+	size_t	i;
+
+	count = 0;
+	i = 0;
+	while (s[i])
+	{
+		while (s[i] && s[i] == c)
+			i++;
+		if (s[i] && s[i] != c)
+			count++;
+		while (s[i] && s[i] != c)
+			i++;
+	}
+	return (count);
+}
+
+static char	*copy_world_of_index(char const *s, char c, size_t index)
+{
+	size_t	count;
+	size_t	i;
+	size_t	start;
+
+	count = 0;
+	i = 0;
+	while (s[i])
+	{
+		while (s[i] && s[i] == c)
+			i++;
+		if (s[i] && s[i] != c)
+			count++;
+		if (s[i] && index == count)
+		{
+			start = i;
+			while (s[i] && s[i] != c)
+				i++;
+			return (ft_substr(s, start, (i - start)));
+		}
+		while (s[i] && s[i] != c)
+			i++;
+	}
+	return (NULL);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	char	**arrays;
+	size_t	count;
+	size_t	j;
+
+	j = 0;
+	if (s == NULL)
+		return (NULL);
+	count = count_world(s, c);
+	arrays = (char **)ft_calloc(sizeof (char *), (count + 1));
+	if (!arrays)
+		return (NULL);
+	arrays[count] = 0;
+	while ((j + 1) <= count)
+	{
+		arrays[j] = copy_world_of_index (s, c, (j + 1));
+		if (arrays[j] == NULL)
+			return (NULL);
+		j++;
+	}
+	return (arrays);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/12 11:43:46 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/12 12:19:16 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+char	*ft_strchr(const char *s, int c)
+{
+	char			cc;
+	unsigned int	i;
+
+	cc = (char)c;
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == cc)
+			return ((char *)&s[i]);
+		i++;
+	}
+	if (s[i] == cc)
+		return ((char *)&s[i]);
+	else
+		return (NULL);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/16 13:49:51 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/19 16:44:51 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+char	*ft_strdup(const char *s)
+{
+	char		*s1;
+	size_t		i;
+
+	i = 0;
+	s1 = (char *) malloc ((ft_strlen(s) + 1));
+	if (!s1)
+		return (NULL);
+	while (s[i])
+	{
+		s1[i] = s[i];
+		i++;
+	}
+	s1[i] = '\0';
+	return (s1);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/26 11:48:32 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/26 12:37:49 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
+{
+	unsigned int	i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i])
+	{
+		(*f)(i, &s[i]);
+		i++;
+	}
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/16 17:21:25 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/19 18:54:56 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*s3;
+	size_t	i;
+	size_t	j;
+
+	if (!s1 && !s2)
+		return (ft_strdup(""));
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+	i = 0;
+	j = 0;
+	s3 = (char *) malloc ((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (!s3)
+		return (NULL);
+	while (s1[i] != '\0')
+		s3[j++] = s1[i++];
+	i = 0;
+	while (s2[i] != '\0')
+		s3[j++] = s2[i++];
+	s3[j] = '\0';
+	return (s3);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/12 09:23:36 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/12 11:27:39 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
+{
+	size_t	i;
+	size_t	ldst;
+	size_t	lsrc;
+
+	i = 0;
+	ldst = ft_strlen(dst);
+	lsrc = ft_strlen(src);
+	if (ldst >= size)
+		return (size + lsrc);
+	while (src[i] != '\0' && ldst + i < size - 1)
+	{
+		dst[ldst + i] = src[i];
+		i++;
+	}
+	dst[ldst + i] = '\0';
+	return (ldst + lsrc);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/11 17:29:14 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/11 18:57:07 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	i;
+
+	i = 0;
+	if (!(src))
+		return (0);
+	if (!dst || (size < 1))
+		return (ft_strlen(src));
+	if (ft_strlen(src) <= (size - 1))
+	{
+		while (src[i] != '\0')
+		{
+			dst[i] = src[i];
+			i++;
+		}
+	}
+	else
+	{
+		while (i < (size - 1))
+		{
+			dst[i] = src[i];
+			i++;
+		}
+	}
+	dst[i] = '\0';
+	return (ft_strlen(src));
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/11 12:33:45 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/11 12:46:57 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h" 
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/26 11:50:16 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/26 12:28:00 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+{
+	unsigned int	i;
+	char			*s1;
+
+	if (!s)
+		return (NULL);
+	s1 = malloc((ft_strlen(s) + 1) * sizeof (char));
+	if (!s1)
+		return (NULL);
+	i = 0;
+	while (i < ft_strlen(s))
+	{
+		s1[i] = (*f)(i, s[i]);
+		i++;
+	}
+	s1[i] = '\0';
+	return (s1);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/12 13:05:27 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/19 18:24:53 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	if (n == 0)
+		return (0);
+	while (i < n && (s1[i] || s2[i]))
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		if (s1[i] == s2[i])
+			i++;
+	}
+	return (0);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/12 15:04:59 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/19 18:14:17 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+char	*ft_strnstr(const char *big, const char *little, size_t len)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	if (!big)
+		return (NULL);
+	if (!little || little[0] == '\0')
+		return ((char *)big);
+	while ((big[j] != '\0') && (j < len))
+	{
+		while (big[j + i] == little[i] && (i + j) < len)
+		{
+			i++;
+			if (little[i] == '\0')
+				return ((char *)&big[j]);
+		}
+		j++;
+		i = 0;
+	}
+	return (NULL);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/12 12:17:36 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/12 16:30:54 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+char	*ft_strrchr(const char *s, int c)
+{
+	char			cc;
+	unsigned int	i;
+	char			*res;
+
+	cc = (char)c;
+	i = 0;
+	res = NULL;
+	while (s[i])
+	{
+		if (s[i] == cc)
+			res = (char *)&s[i];
+		i++;
+	}
+	if (s[i] == cc)
+		res = (char *)&s[i];
+	return (res);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/16 17:53:16 by mledda            #+#    #+#             */
+/*   Updated: 2026/02/22 16:59:31 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+static int	ft_isset(char c, char const *set)
+{
+	size_t	i;
+
+	i = 0;
+	while (set[i] != '\0')
+	{
+		if (c == set[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	*ft_strtrim(char const *s1, char const *set)
+{
+	char	*stronc;
+	size_t	i;
+	size_t	j;
+	size_t	k;
+
+	i = 0;
+	j = 0;
+	if (!s1)
+		return (NULL);
+	k = ft_strlen(s1) - 1;
+	if (!set)
+		return (ft_strdup(s1));
+	while (s1[i] != '\0' && ft_isset(s1[i], set) == 1)
+		i++;
+	if (s1[i] == '\0')
+		return (ft_strdup(""));
+	while (k > 0 && k > i && ft_isset(s1[k], set) == 1)
+		k--;
+	stronc = (char *) malloc((k - i + 2) * sizeof(char));
+	if (!stronc)
+		return (NULL);
+	while (i <= k)
+		stronc[j++] = s1[i++];
+	stronc[j] = '\0';
+	return (stronc);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/16 14:40:55 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/19 18:23:24 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*s1;
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	if (start > ft_strlen(s))
+		return (ft_strdup(""));
+	if ((start + len) > ft_strlen(s))
+		s1 = (char *) malloc (((ft_strlen(s) - start) + 1) * sizeof(char));
+	else
+		s1 = (char *) malloc((len +1) * sizeof(char));
+	if (!s1)
+		return (NULL);
+	while (i < len && start < ft_strlen(s) && s[start + i])
+	{
+		s1[i] = s[start + i];
+		i++;
+	}
+	s1[i] = '\0';
+	return (s1);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/11 12:19:38 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/11 12:30:07 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+int	ft_tolower(int c)
+{
+	if (c <= 90 && c >= 65)
+		return (c + 32);
+	else
+		return (c);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/11 11:57:40 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/11 12:13:43 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+int	ft_toupper(int c)
+{
+	if (c <= 122 && c >= 97)
+		return (c - 32);
+	else
+		return (c);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/09 14:49:19 by mledda            #+#    #+#             */
+/*   Updated: 2025/11/29 12:59:53 by mledda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef LIBFT_H
+# define LIBFT_H
+# include <unistd.h>
+# include <stdlib.h>
+
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}	t_list;
+
+int		ft_isalpha(int c);
+int		ft_isdigit(int c);
+int		ft_isalnum(int c);
+int		ft_isascii(int c);
+int		ft_isprint(int c);
+int		ft_toupper(int c);
+int		ft_tolower(int c);
+size_t	ft_strlen(const char *str);
+void	*ft_memset(void *s, int c, size_t n);
+void	ft_bzero(void *s, size_t n);
+void	*ft_memcpy(void *dest, const void *src, size_t n);
+void	*ft_memmove(void *dest, const void *src, size_t n);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+size_t	ft_strlcat(char *dst, const char *src, size_t size);
+char	*ft_strchr(const char *s, int c);
+char	*ft_strrchr(const char *s, int c);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+void	*ft_memchr(const void *s, int c, size_t n);
+int		ft_memcmp(const void *s1, const void *s2, size_t n);
+char	*ft_strnstr(const char *big, const char *little, size_t len);
+int		ft_atoi(const char *str);
+void	*ft_calloc(size_t nmemb, size_t size);
+char	*ft_strdup(const char *s);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strtrim(char const *s1, char const *set);
+char	**ft_split(char const *s, char c);
+char	*ft_itoa(int n);
+void	ft_putchar_fd(char c, int fd);
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+void	ft_striteri(char *s, void (*f)(unsigned int, char*));
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putendl_fd(char *s, int fd);
+void	ft_putnbr_fd(int n, int fd);
+t_list	*ft_lstnew(void *content);
+void	ft_lstadd_front(t_list **lst, t_list *new);
+int		ft_lstsize(t_list *lst);
+t_list	*ft_lstlast(t_list *lst);
+void	ft_lstadd_back(t_list **lst, t_list *new);
+void	ft_lstdelone(t_list *lst, void (*del)(void*));
+void	ft_lstclear(t_list **lst, void (*del)(void*));
+void	ft_lstiter(t_list *lst, void (*f)(void *));
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
+#endif
+NAME	= libft.a
+
+CC	= cc
+CFLAGS	= -Wall -Wextra -Werror
+AR	= ar rcs
+RM	= rm -f
+
+SRC	 =		ft_isalpha.c  ft_isdigit.c  ft_isalnum.c ft_isascii.c\
+			ft_isprint.c ft_toupper.c ft_tolower.c ft_strlen.c\
+			ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c\
+			ft_strlcpy.c ft_strlcat.c ft_strchr.c ft_strrchr.c\
+			ft_strncmp.c ft_memchr.c ft_memcmp.c ft_strnstr.c\
+			ft_atoi.c ft_calloc.c ft_strdup.c ft_substr.c\
+			ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c\
+			ft_putchar_fd.c ft_strmapi.c ft_striteri.c\
+			ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c\
+		
+BONUS_SRC	=	ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c\
+				ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c\
+				ft_lstmap.c\
+
+OBJ		= $(SRC:.c=.o)
+BONUS_OBJ	= $(BONUS_SRC:.c=.o)
+
+all: $(NAME)
+
+$(NAME): $(OBJ)
+	$(AR) $(NAME) $(OBJ)
+
+bonus: $(OBJ) $(BONUS_OBJ)
+	$(AR) $(NAME) $(OBJ) $(BONUS_OBJ)
+	
+%.o: %.c libft.h
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean: 
+	$(RM) $(OBJ) $(BONUS_OBJ)
+
+fclean: clean
+	$(RM) $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 11:47:50 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/26 17:52:30 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/28 03:53:14 by tlopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,36 +27,6 @@ void	init_operations(t_count_operations *ops)
 	ops->count_rrr = 0;
 }
 
-void	print_operations(t_count_operations *ops)
-{
-	int	total;
-
-	total = ops->count_pa + ops->count_pb + ops->count_sa + ops->count_sb
-		+ ops->count_ss + ops->count_ra + ops->count_rb + ops->count_rr
-		+ ops->count_rra + ops->count_rrb + ops->count_rrr;
-	ft_printf_fd(2, "--- Operations ---\n");
-	ft_printf_fd(2, "pa: %d | pb: %d\n", ops->count_pa, ops->count_pb);
-	ft_printf_fd(2, "sa: %d | sb: %d | ss: %d\n", ops->count_sa, ops->count_sb, ops->count_ss);
-	ft_printf_fd(2, "ra: %d | rb: %d | rr: %d\n", ops->count_ra, ops->count_rb, ops->count_rr);
-	ft_printf_fd(2, "rra: %d | rrb: %d | rrr: %d\n", ops->count_rra, ops->count_rrb, ops->count_rrr);
-	ft_printf_fd(2, "Total: %d\n", total);
-}
-
-void    print_stack_index(StackElement *st)
-{
-	if (!st)
-	{
-		ft_printf_fd(2, "Stack is empty\n");
-		return ;
-	}
-	while (st)
-	{
-		ft_printf_fd(1, "Value: %d | Index: %d\n", st->value, st->index);
-		st = st->next;
-	}
-}
-
-
 int	main(int argc, char **argv)
 {
 	char				*s;
@@ -64,32 +34,22 @@ int	main(int argc, char **argv)
 	t_count_operations	ops;
 	t_count_flag		flags;
 
-	a = NULL;
 	s = NULL;
 	init_operations(&ops);
-
 	flags = ft_count_flags(argc, argv);
-	if (!check_flags(flags))
+	if (check_flags(flags) == 0)
 		return (0);
-
 	s = add_argv(argc, argv);
 	if (!s)
 		return (0);
-	if (!check_s(s))
-	{
-		ft_printf_fd(2, "sign error\n");
-		free(s);
-		return (0);
-	}
-
+	if (check_s(s) == 0)
+		return (ft_printf_fd(2, "ERROR\n"), free(s), 0);
 	a = stack_a(s);
-	indexation(&a);
-
-	choose_sort(&a, &ops, flags);
-
-	// print_stack(a);
-
 	free(s);
+	if (!a)
+		return (0);
+	indexation(&a);
+	choose_sort(&a, &ops, flags);
 	free_stack(a);
 	return (0);
 }

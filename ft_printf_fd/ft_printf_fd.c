@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mledda <mledda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 15:20:56 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/22 16:58:34 by mledda           ###   ########.fr       */
+/*   Updated: 2026/02/28 03:33:25 by tlopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@ int	ft_printf_fd(int fd, const char *format, ...)
 
 	i = 0;
 	count = 0;
-	va_start (ap, format);
+	va_start(ap, format);
 	if (!format)
+	{
+		va_end(ap);
 		return (0);
+	}
 	while (format[i])
 	{
 		if (format[i] == '%')
@@ -34,6 +37,6 @@ int	ft_printf_fd(int fd, const char *format, ...)
 			count += write(fd, &format[i], 1);
 		i++;
 	}
-	return (count);
 	va_end(ap);
+	return (count);
 }

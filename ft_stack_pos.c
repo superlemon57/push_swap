@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_stack_pos.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/16 12:01:47 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/28 03:34:05 by tlopez           ###   ########.fr       */
+/*   Created: 2026/02/16 19:21:26 by mledda            #+#    #+#             */
+/*   Updated: 2026/02/28 03:13:13 by tlopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap.h"
 
-void	*ft_calloc(size_t nmemb, size_t size)
+int	get_pos(StackElement *stack, int target_index)
 {
-	unsigned char	*p;
-	size_t			i;
-	size_t			total;
+	int	pos;
 
-	total = nmemb * size;
-	i = 0;
-	if (nmemb != 0 && total / nmemb != size)
-		return (NULL);
-	p = malloc(total);
-	if (p == NULL)
-		return (NULL);
-	while (i < total)
+	pos = 0;
+	while (stack)
 	{
-		p[i] = 0;
-		i++;
+		if (stack->index == target_index)
+			return (pos);
+		pos++;
+		stack = stack->next;
 	}
-	return (p);
+	return (pos);
 }
