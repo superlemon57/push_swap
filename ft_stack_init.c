@@ -6,7 +6,7 @@
 /*   By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 15:19:32 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/28 03:13:12 by tlopez           ###   ########.fr       */
+/*   Updated: 2026/02/28 15:50:55 by tlopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ int	no_duplicate(StackElement *a)
 			if (current->value == runner->value)
 			{
 				ft_printf_fd(2, "duplicate\n");
-				return (0);
+				return (1);
 			}
 			runner = runner->next;
 		}
 		current = current->next;
 	}
-	return (1);
+	return (0);
 }
 
 void	free_split(char **arrays)
@@ -70,8 +70,6 @@ static StackElement	*build_stack(char **arr)
 	int				value;
 
 	value = ft_atoi_mod(arr[0]);
-	if (value == 1)
-		return (NULL);
 	first = new_node(value);
 	if (!first)
 		return (NULL);
@@ -80,8 +78,6 @@ static StackElement	*build_stack(char **arr)
 	while (arr[++i])
 	{
 		value = ft_atoi_mod(arr[i]);
-		if (value == 1)
-			return (free_stack(first), NULL);
 		cur->next = new_node(value);
 		if (!cur->next)
 			return (free_stack(first), NULL);
@@ -99,8 +95,14 @@ StackElement	*stack_a(char *s)
 	if (!arr || !arr[0])
 		return (NULL);
 	stack = build_stack(arr);
+	if (!stack)
+	{
+		return(free_stack(stack), NULL);
+	}
 	free_split(arr);
-	if (!stack || !no_duplicate(stack))
+	if (!stack || no_duplicate(stack) == 1)
+	{	
 		return (free_stack(stack), NULL);
+	}
 	return (stack);
 }

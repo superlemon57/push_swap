@@ -6,17 +6,11 @@
 /*   By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 12:50:49 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/28 03:51:32 by tlopez           ###   ########.fr       */
+/*   Updated: 2026/02/28 15:51:24 by tlopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-static void	print_error_and_exit(void)
-{
-	write(2, "error\n", 6);
-	exit(1);
-}
 
 int	ft_atoi_mod(char *str)
 {
@@ -31,17 +25,34 @@ int	ft_atoi_mod(char *str)
 		i++;
 	if (str[i] == '+' || str[i] == '-')
 	{
-		if (str[i++] == '-')
+		if (str[i] == '-')
 			sign = -1;
+		i++;
+		if (str[i] == '+' || str[i] == '-')
+		{
+			ft_printf_fd(2, "Error_sign\n");
+			exit(1);
+			//return (write(2, "Error\n", 6), 1);
+		}
 	}
-	if (!(str[i] >= '0' && str[i] <= '9') && str[i] != '\0')
-		print_error_and_exit();
-	while (str[i] <= '9' && str[i] >= '0')
+	// if (!(str[i] >= '0' && str[i] <= '9'))
+	// 	return (write(2, "Error\n", 6), 1);
+	while (str[i] >= '0' && str[i] <= '9')
 	{
 		result = (10 * result) + (str[i] - '0');
 		i++;
 	}
+	if (str[i] != '\0')
+	{
+		ft_printf_fd(2, "Error\n");
+		exit(1);
+		//return (write(2, "Error\n", 6), 1);
+	}
 	if ((sign * result) > 2147483647 || (sign * result) < -2147483648)
-		print_error_and_exit();
+	{
+		ft_printf_fd(2, "Error\n");
+		exit(1);
+		//return (write(2, "Error\n", 6), 1);
+	}
 	return ((int)(sign * result));
 }
