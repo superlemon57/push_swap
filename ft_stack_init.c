@@ -6,7 +6,7 @@
 /*   By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 15:19:32 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/28 15:50:55 by tlopez           ###   ########.fr       */
+/*   Updated: 2026/02/28 17:34:48 by tlopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	no_duplicate(StackElement *a)
 		{
 			if (current->value == runner->value)
 			{
-				ft_printf_fd(2, "duplicate\n");
+				ft_printf_fd(2, "Error\n");
 				return (1);
 			}
 			runner = runner->next;

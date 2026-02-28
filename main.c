@@ -6,7 +6,7 @@
 /*   By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 11:47:50 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/28 15:51:16 by tlopez           ###   ########.fr       */
+/*   Updated: 2026/02/28 17:34:30 by tlopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	main(int argc, char **argv)
 	if (!s)
 		return (0);
 	if (check_s(s) == 0)
-		return (ft_printf_fd(2, "ERROR\n"), free(s), 0);
+		return (ft_printf_fd(2, "Error\n"), free(s), 0);
 	a = stack_a(s);
 	free(s);
 	if (!a)

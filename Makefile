@@ -6,7 +6,7 @@
 #    By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/16 20:03:43 by mledda            #+#    #+#              #
-#    Updated: 2026/02/28 03:14:01 by tlopez           ###   ########.fr        #
+#    Updated: 2026/02/28 17:36:19 by tlopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ LIBFT_A = $(LIBFT_DIR)/libft.a
 FT_PRINTF_FD_A = $(FT_PRINTF_FD_DIR)/ft_printf_fd.a
 
 CC	= cc
-CFLAGS	= -Wall -Wextra -Werror -I. -I$(LIBFT_DIR) -I$(FT_PRINT_FD_DIR) -fsanitize=address,undefined,leak -g3 -std=c99
+CFLAGS	= -Wall -Wextra -Werror -I. -I$(LIBFT_DIR) -I$(FT_PRINT_FD_DIR)
 RM	= rm -f
 
 all: $(NAME)

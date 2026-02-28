@@ -6,7 +6,7 @@
 /*   By: tlopez <tlopez@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 12:50:49 by mledda            #+#    #+#             */
-/*   Updated: 2026/02/28 15:51:24 by tlopez           ###   ########.fr       */
+/*   Updated: 2026/02/28 17:34:22 by tlopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_atoi_mod(char *str)
 		i++;
 		if (str[i] == '+' || str[i] == '-')
 		{
-			ft_printf_fd(2, "Error_sign\n");
+			ft_printf_fd(2, "Error\n");
 			exit(1);
 			//return (write(2, "Error\n", 6), 1);
 		}
